@@ -1,10 +1,77 @@
 require("dotenv").config();
 
-//code required to import key.js file and store it in a variable
-var liri = require('./keys.js');
+//code required to link key.js file which has API keys for Twitter/Spotify and store it in a variable
+var keys = require('./keys.js');
 
-// Create constructor function to show the last 20 tweets and
-// when they were created.
+// Variables for twitter, to require API
+var Twitter = require('twitter');
+
+// Variable for spotify, to require API
+var Spotify = require('node-spotify-api');
+
+//Variable to require fs package
+var fs = require('fs');
+
+//Variable to require request package
+var request = require("request");
+
+//Variable to access and require Spotify  API's with id, key and secret keys
+var spotify = new Spotify(keys.spotify);
+
+
+//Function to display my twitter feed
+var psuedoTweets = function() {
+    //grabs the twitter API key and secret keys
+    var client = new Twitter(keys.twitter);
+    // Variable for my twitter account 
+    var myTweetAccount = {
+        screen_name: 'nodeMorpha'
+    };
+    //Use get method of clients , get function takes three arguments from twitter feed
+    // Creates 3 params within function error, tweets, and response.
+    client.get('statuses/user_timeline', myTweetAccount, function(error,tweets, response) {
+            if (!error) {
+            // if there are no errors run for loop with tweet data up to 25
+                for (var i = 0; i < tweets.length; i++) {
+                    var feed = tweets[i].created_at;
+                    console.log("@MorphaNode: " + tweets[i].text + feed.substring(0,24));
+                    console.log("");
+                    console.log(tweets[i].text);
+
+                }
+            }
+        });
+    };
+
+    var mySpotify = function(songTitle){
+        if (songTitle === undefined) {
+            songTitle = "Dark Steering";
+        }
+        spotify.search( 
+            { 
+                type: "track",
+                query: songTitle
+            },
+            function(err, data) {
+                if (err) {
+                    console.log("Error occured: " + err);
+                    return;
+                }
+            }
+        )
+    };
+
+    var runThis = function(arg1, arg2) {
+        pick (arg1, arg2);
+    };
+
+    runThis(process.argv[2] + process.argv[3]);
+    
+
+
+
+
+
 
 
 
