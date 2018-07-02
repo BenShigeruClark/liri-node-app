@@ -4,16 +4,16 @@
 require("dotenv").config();
 
 //code required to link key.js file which has API keys for Twitter/Spotify and store it in a variable
-var keys = require('./keys.js');
+var keys = require("./keys.js");
 
 // Variables for twitter, to require API
-var Twitter = require('twitter');
+var Twitter = require("twitter");
 
 // Variable for spotify, to require API
-var Spotify = require('node-spotify-api');
+var Spotify = require("node-spotify-api");
 
 //Variable to require fs package
-var fs = require('fs');
+var fs = require("fs");
 
 //Variable to require request package
 var request = require("request");
@@ -35,11 +35,11 @@ var psuedoTweets = function() {
     var client = new Twitter(keys.twitter);
     // Variable for my twitter account 
     var myTweetAccount = {
-        screen_name: 'nodeMorpha'
+        screen_name: "nodeMorpha"
     };
     //Use get method of clients , get function takes three arguments from twitter feed
     // Creates 3 params within function error, tweets, and response.
-    client.get('statuses/user_timeline', myTweetAccount, function(error,tweets, response) {
+    client.get("statuses/user_timeline", myTweetAccount, function(error,tweets, response) {
             if (!error) {
             // if there are no errors run for loop with tweet data up to 25 times
                 for (var i = 0; i < tweets.length; i++) {
@@ -154,19 +154,19 @@ var psuedoTweets = function() {
 
     var nodeCommand = function(caseData, functionData) {
         switch (caseData) {
-            case 'my-tweets':
+            case "my-tweets":
             psuedoTweets();
             break;
 
-            case 'spotify-this-song':
+            case "spotify-this-song":
             mySpotify(functionData);
             break;
 
-            case 'movie-this':
+            case "movie-this":
             movieSearch(functionData);
             break;
 
-            case 'do-what-it-says':
+            case "do-what-it-says":
             doWhatItSays();
             break;
             // When the command is called and undefined LIRI will log "Not a LIRI function!"
